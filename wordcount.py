@@ -46,6 +46,39 @@ import sys
 # Then print_words() and print_top() can just call the utility function.
 
 ###
+def sort_words(word):
+    return word[-1]
+
+def counted_words(filename):
+    f = open(filename, 'r')
+    words = f.read().split()
+    count = {}
+
+    for word in words:
+        word = word.lower()
+        if word not in count:
+            count[word] = 1
+        else:
+            count[word] += 1
+
+    f.close()
+
+    return count
+
+def print_words(filename):
+    dict = counted_words(filename)
+
+    for word in sorted(dict.keys()):
+        print word, dict[word]
+
+def print_top(filename):
+    count = counted_words(filename)
+    i = 0
+
+    items = sorted(count.items(), key=sort_words, reverse=True)
+    for item in items[:20]:
+        print item[0] + ' ' + str(item[1]) + ' times'
+        i += 1
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
